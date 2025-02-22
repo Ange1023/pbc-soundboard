@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script type="module" src="./services/indexeDB.js"></script>
+    <script type="module" src="./components/audio.js"></script>
+    <script type="module" src="./components/modal-edit-name.js"></script>
+    <script type="module" src="./components/modal-edit.js"></script>
+    <script type="module" src="./components/modal-add-audio.js"></script>
+    <script type="module" src="./components/list.js"></script>
+    <script type="module" src="./components/modal-add-playlist.js"></script>
+    <script type="module" src="./components/modal-addTo-playlist.js"></script>
+    <script type="module" src="./components/modal-import.js"></script>
+    <script type="module" src="./components/views.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>Soundboard</h1>
+        <div class="bar">
+            <h2>All</h2>
+            <div class="options">
+                <button id='add-audio-btn' class="a-option" title="Add new audio"><i class="fa-solid fa-square-plus" style="color: #ffffff;"></i></button>
+                <button id='all-playlist-btn' class="a-option" title="All playlist"><i class="fa-solid fa-folder-open" style="color: #ffffff;"></i></i></button>
+                <button id="add-to-playlist-btn" class="a-option" title="Add to playlist"><i class="fa-solid fa-compact-disc" style="color: #ffffff;"></i></button>
+                <button id="export-playlist-btn" class="a-option" title="Export playlist"><i class="fa-solid fa-arrow-up-from-bracket" style="color: #ffffff;"></i></button>
+                <button id="import-playlist-btn" class="b-option" title="Import playlist"><i class="fa-solid fa-download" style="color: #ffffff;"></i></button>
+                <button id="add-playlist-btn" class="b-option" title="Add new playlist"><i class="fa-solid fa-square-plus" style="color: #ffffff;"></i></button>
+            </div>
+        </div>
+        <custom-list></custom-list> 
+    </div>
+
+    <modal-edit></modal-edit> 
+    <modal-edit-name></modal-edit-name>
+    <modal-add-audio></modal-add-audio>
+    <modal-add-playlist></modal-add-playlist>
+    <modal-addto-playlist></modal-addto-playlist>
+    <modal-import></modal-import>
+
+</body>
+</html>
