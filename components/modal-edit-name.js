@@ -136,11 +136,15 @@ class modalEditName extends HTMLElement{
 
     #changeName(){
         
-        const newName = this.nameInput.value;
+        let newName = this.nameInput.value;
 
         if(!newName){
             alert('Ingrese un nombre');
             return;
+        }
+
+        if(newName.length > 15){
+            newName = newName.slice(0,15);
         }
         
         if( this.instance instanceof customPlaylist)

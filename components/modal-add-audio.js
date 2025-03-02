@@ -159,7 +159,7 @@ class modalAddAudio extends HTMLElement{
 
         const playlistName = document.querySelector('h2').textContent;
 
-        const audioName = this.audioNameInput.value;
+        const audioName = this.audioNameInput.value.slice(0, 15);
         const audioFile = this.audioFileInput.files[0];
     
         
@@ -168,6 +168,7 @@ class modalAddAudio extends HTMLElement{
             alert('Por favor, complete todos los campos');
             return;
         }
+
         console.log("Audio agregado en la lista: ", playlistName);
         addAudio(audioName, audioFile, playlistName);
 
