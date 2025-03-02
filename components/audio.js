@@ -1,6 +1,7 @@
+
 export class customAudio extends HTMLElement {
     #name;
-    #pressed = false;
+    #playlist;
 
     constructor() {
         super();
@@ -8,6 +9,7 @@ export class customAudio extends HTMLElement {
         this.audio = new Audio();
         this.audio.preload = 'auto';
         this.#name = "Audio";
+        this.#playlist = 'All';
     }
 
     get name() {
@@ -16,6 +18,13 @@ export class customAudio extends HTMLElement {
 
     set name(value) {
         this.#name = value;
+    }
+
+    get playlist() {
+        return this.#playlist;
+    }
+    set playlist(value) {
+        this.#playlist = value;
     }
 
     get audioBtn() {
@@ -95,10 +104,6 @@ export class customAudio extends HTMLElement {
                     border-radius: 0 5px 5px 0;
                 }
 
-                .selected {
-                    transform: scale(0.95); /* Reduce ligeramente el tamaño */
-                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-                }
             `;
             this.shadowRoot.appendChild(styles);
         }
@@ -108,30 +113,8 @@ export class customAudio extends HTMLElement {
         this.editBtn.addEventListener('click', () => this.#openModalEdit());
         this.audioBtn.addEventListener('click', () => this.#handleAudio());
         this.audio.addEventListener('ended', () => this.#removeActive());
-
-        let pressTimer;
-
-        this.audioBtn.addEventListener('mousedown', () => {
-            pressTimer = setTimeout(() => {
-                this.#pressed = true;
-
-                if (this.audioContainer.classList.contains('selected')) {
-                    this.removeSelected();
-                } else {
-                    this.setSelected();
-                }
-            }, 300);
-        });
-
-        this.audioBtn.addEventListener('mouseup', () => {
-            clearTimeout(pressTimer);
-        });
-
-        this.audioBtn.addEventListener('mouseleave', () => {
-            clearTimeout(pressTimer);
-        });
     }
-
+    
     #openModalEdit() {
         document.querySelector('modal-edit').openModal(this);
     }
@@ -143,10 +126,6 @@ export class customAudio extends HTMLElement {
     }
 
     #handleAudio() {
-        if (this.audioBtn.classList.contains('selected') || this.#pressed) {
-            this.#pressed = false;
-            return;
-        }
 
         if (this.audio.paused) {
             this.audio.play();
@@ -188,11 +167,15 @@ export class customAudio extends HTMLElement {
             case 'state':
                 console.log(`state cambiado: ${newValue}`);
                 break;
+            case 'playlist':
+                if (!newValue) return;
+                this.playlist = newValue;
+                break;
         }
     }
 
     static get observedAttributes() {
-        return ['name', 'audio', 'state'];
+        return ['name', 'audio', 'state', 'playlist'];
     }
 }
 

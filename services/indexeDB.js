@@ -11,7 +11,7 @@ async function startDB() {
     return new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-        request.onupgradeneeded = (event) => {
+        request.onupgradeneeded = async (event) => {
             const database = event.target.result;
 
             if (!database.objectStoreNames.contains("audios")) {
@@ -23,11 +23,12 @@ async function startDB() {
                 const playlistStore = database.createObjectStore("playlists", { keyPath: "id", autoIncrement: true });
                 playlistStore.createIndex("by_name", "name", { unique: true });
             }
+            await createPlaylist("All");
+            
         };
 
         request.onsuccess = (event) => {
             db = event.target.result; 
-            console.log("Base de datos abierta:", db);
             resolve(db);
         };
 
@@ -79,18 +80,18 @@ export async function addAudioToPlaylist(playlistName, audioName) {
     
     const playlist = await getPlaylistByName(playlistName);
     if (!playlist) {
-        console.error("Playlist no encontrada.");
+        alert("Playlist no encontrada.");
         return;
     }
     
     const audio = await getAudioByName(name);
     if (!audio) {
-        console.error("Audio no encontrado.");
+        alert("Audio no encontrado.");
         return;
     }
 
     if (playlist.audios.includes(audio.id)) {
-        console.error("El audio ya está en la playlist.");
+        alert("El audio ya está en la playlist.");
         return;
     }
 
@@ -479,6 +480,7 @@ export async function importPlaylist(file) {
         console.error("Error al leer el archivo.");
     };
 }
+
 const capitalize = (string)=> {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

@@ -1,8 +1,10 @@
-//Modal edit name se encarga de cambiar el atributo name del elemento que lo llama.
+
 import { getPlaylist, addAudioToPlaylist, dbEvents } from "../services/indexeDB.js";
 
 class modalAddToPlaylist extends HTMLElement{
-   
+    
+    #instance = null;
+
     constructor(){
         super();
         this.attachShadow({ mode: 'open' });
@@ -22,6 +24,14 @@ class modalAddToPlaylist extends HTMLElement{
 
     get playlistSelect(){
         return this.shadowRoot.getElementById('playlist-select');
+    }
+
+    get instance(){
+        return this.#instance;
+    }
+
+    set instance(value){
+        this.#instance = value;
     }
 
     connectedCallback() {
@@ -114,9 +124,6 @@ class modalAddToPlaylist extends HTMLElement{
 
     #setEvents(){
 
-        const openModalBtn = document.getElementById('add-to-playlist-btn');
-        openModalBtn.addEventListener('click', () => this.openModal());
-
         this.modal.addEventListener('click', (event) => { 
             if (event.target === this.modal) {
                 this.closeModal()
@@ -129,6 +136,10 @@ class modalAddToPlaylist extends HTMLElement{
         });
 
         dbEvents.addEventListener('playlistAdded', async () => {
+            await this.#renderSelect();
+        });
+
+        dbEvents.addEventListener('playlistUpdated', async () => {
             await this.#renderSelect();
         });
 
@@ -157,25 +168,10 @@ class modalAddToPlaylist extends HTMLElement{
     }
 
     async #addToPlaylist(){
+
         const playlistName = this.playlistSelect.value;
-        const audiosSelected = document.querySelector('custom-list').getAudiosSelected();
-        
-        [...audiosSelected].forEach(async audio => {
-            await addAudioToPlaylist(playlistName,audio.name);
-            audio.removeSelected();
-        });
-    }
-
-    // #changeName(){
-        
-    //     const newName = this.nameInput.value;
-
-    //     changeAudioName(this.instance.name,newName);
-    //     this.instance.name = newName;
-
-    //     this.nameInput.value = '';
-    //     this.closeModal();
-    // }
+        await addAudioToPlaylist(playlistName,this.instance.name);
+        }
     
     closeModal(){
         this.modal.style.display = 'none';
@@ -185,5 +181,5 @@ class modalAddToPlaylist extends HTMLElement{
         this.instance = instance;
         this.modal.style.display = 'grid';
     }
-}  
+}
 customElements.define('modal-addto-playlist', modalAddToPlaylist);

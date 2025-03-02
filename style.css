@@ -42,7 +42,7 @@ button{
     background-color: #3d2b3c;
 }
 
-i:hover{
+i:hover, img:hover{
     transform: scale(1.08);
     filter: drop-shadow(4px 4px 10px rgba(235, 230, 230, 0.5));
 }

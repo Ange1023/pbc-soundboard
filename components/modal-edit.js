@@ -15,6 +15,9 @@ class modalEdit extends HTMLElement{
         return this.shadowRoot.getElementById('modal-edit');
     }
 
+    get addToPlaylistBtn(){
+        return this.shadowRoot.getElementById('add-to-playlist');
+    }
     get nameBtn(){
         return this.shadowRoot.getElementById('name-btn');
     }
@@ -40,6 +43,7 @@ class modalEdit extends HTMLElement{
         return `
         <div id="modal-edit" class="modal">
             <div class="modal-content">
+                <button id="add-to-playlist" class="modal-btn hidden">Agregar a playlist</button>
                 <button id="name-btn" class="modal-btn">Cambiar nombre</button>
                 <button id="delete-btn" class="modal-btn">Eliminar</button>
             </div>
@@ -96,6 +100,9 @@ class modalEdit extends HTMLElement{
                 }
                 .show {
                     display: grid;
+                }
+                .hidden {  
+                    display: none;
                 }`;
             this.shadowRoot.appendChild(styles);
     }
@@ -103,7 +110,13 @@ class modalEdit extends HTMLElement{
     #setEvents(){
 
         const modalEditName = document.querySelector('modal-edit-name');
+        const modalAddToPlaylist = document.querySelector('modal-addto-playlist');
 
+        this.addToPlaylistBtn.addEventListener('click', () => {
+            modalAddToPlaylist.openModal(this.instance);
+            this.closeModal();
+        });
+        
         this.nameBtn.addEventListener('click', () => {
             modalEditName.openModal(this.instance);
             this.closeModal();
@@ -150,6 +163,12 @@ class modalEdit extends HTMLElement{
 
     openModal(instance){
         this.instance = instance;
+
+        if (this.instance instanceof customAudio){
+            this.addToPlaylistBtn.classList.remove('hidden');
+        }else{
+            this.addToPlaylistBtn.classList.add('hidden');
+        }
         this.modal.style.display = 'grid';
     }
 }  
