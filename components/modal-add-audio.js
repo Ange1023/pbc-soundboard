@@ -162,30 +162,19 @@ class modalAddAudio extends HTMLElement{
         const audioName = this.audioNameInput.value;
         const audioFile = this.audioFileInput.files[0];
     
-        console.log("Audio agregado en la lista: ", playlistName);
+        
     
         if (!audioName || !audioFile) {
-            console.log("Faltan datos");
+            alert('Por favor, complete todos los campos');
             return;
         }
-        
+        console.log("Audio agregado en la lista: ", playlistName);
         addAudio(audioName, audioFile, playlistName);
 
 
         this.audioNameInput.value = '';  
         this.audioFileInput.value = ''; 
-        // const reader = new FileReader();
-        // reader.onload = () => {
-        //     const audio = new customAudio();
-        //     audio.setAttribute('name', audioName);
-        //     audio.setAttribute('audio', reader.result);
-        //     document.querySelector('.list').appendChild(audio);
-    
-        //     audioNameInput.value = '';  
-        //     audioFileInput.value = '';  
-        // };
-    
-        // reader.readAsDataURL(audioFile);
+
         this.closeModal();
     }
     

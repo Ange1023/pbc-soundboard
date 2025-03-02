@@ -129,6 +129,12 @@ class modalAddPlaylist extends HTMLElement{
     }
 
     #addPlaylist(){
+
+        if (this.nameInput.value === '') {
+            alert('Por favor ingrese un nombre para la playlist');
+            return;
+        }
+        
         createPlaylist(this.nameInput.value);
         this.nameInput.value = '';
         this.closeModal();

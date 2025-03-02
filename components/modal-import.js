@@ -120,12 +120,17 @@ class modalImport extends HTMLElement {
     async #importPlaylist() {
 
         const file = this.fileInput.files[0];
-        if (file) {
+
+        if(!file) return alert('No se ha seleccionado un archivo');
+
+        if (file === 'audio/mpeg') {
                 await importPlaylist(file);
                 this.closeModal();
-            };
+        } else {
+            alert('El archivo no es valido');
         }
-
+    }
+    
     #render() {
         this.shadowRoot.innerHTML = this.#getTemplate();
         this.#loadStyles();

@@ -24,6 +24,7 @@ async function startDB() {
                 playlistStore.createIndex("by_name", "name", { unique: true });
             }
             await createPlaylist("All");
+            await importInitialAudios();
             
         };
 
@@ -481,6 +482,22 @@ export async function importPlaylist(file) {
     };
 }
 
+
+async function importInitialAudios() {
+    console.log("Importando audios iniciales...");
+    
+    const audioFiles = ['Ahaha wow.mp3', 'Applause.mp3','chinese barbie.mp3','just do it.mp3','No god please no.mp3','spiderman.mp3','Wait.mp3']; 
+
+    for (const fileName of audioFiles) {
+        const response = await fetch(`../data/${fileName}`);
+        const blob = await response.blob();
+        const file = new File([blob], fileName, { type: 'audio/mp3' });
+        await addAudio(fileName.replace('.mp3',''), file, 'All');
+    }
+}
+
 const capitalize = (string)=> {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+
