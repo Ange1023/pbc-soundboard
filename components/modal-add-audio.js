@@ -72,7 +72,7 @@ class modalAddAudio extends HTMLElement{
                     padding: 20px;
                     border-radius: 10px;
                     border: 1px solid #444;
-                    width: 80%;
+                    min-width: 250px;
                     max-width: 400px; 
                     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
                     color: #fff;

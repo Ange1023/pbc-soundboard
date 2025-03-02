@@ -11,7 +11,7 @@ body {
     display: grid;
     place-content: center;
     width: 400px;
-    height: 700px;
+    height: 500px;
     gap: 5px;
     position: fixed;
     margin-top: 100px;

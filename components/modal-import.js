@@ -56,7 +56,7 @@ class modalImport extends HTMLElement {
                 padding: 20px;
                 border-radius: 10px;
                 border: 1px solid #444;
-                width: 80%;
+                width: 300px;
                 max-width: 400px; 
                 box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
                 color: #fff;
@@ -130,7 +130,7 @@ class modalImport extends HTMLElement {
             alert('El archivo no es valido');
         }
     }
-    
+
     #render() {
         this.shadowRoot.innerHTML = this.#getTemplate();
         this.#loadStyles();
