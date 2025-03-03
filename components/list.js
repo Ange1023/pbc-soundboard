@@ -54,7 +54,7 @@ class CustomList extends HTMLElement {
                 background-color: whites;
                 max-width: 500px;
                 min-width: 300px;
-                height: 75%;
+                height: 430px;
                 padding: 10px;
                 overflow-y: auto;
             }
